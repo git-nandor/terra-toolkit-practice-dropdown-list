@@ -13,6 +13,8 @@
     "react-scripts": "4.0.3",
     "terra-application": "^1.47.0",
     "terra-dropdown-button": "^1.27.0",
+    "terra-table": "^4.24.0",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {

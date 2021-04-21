@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton, { Item, Variants } from 'terra-dropdown-button';
-
+import ResultsTable from '../results-table';
 
 const EmployeeList = (listDataJson) => {
     const defaultCity = 'default';
     const [city, setCity] = useState(defaultCity);
+    const [dataForTable, setDataForTable] = useState(-1);
     // const listData = JSON.parse(listDataJson); origin error? invalid json?
     const listData = listDataJson.listData.data;
     
@@ -24,14 +25,9 @@ const EmployeeList = (listDataJson) => {
         };
     }
 
-    const createTable = (localizedData) => {
-      // TODO
-      console.log('create table for: ', localizedData);
-    }
-
     const startGatheringProcess = (city) => {
       let localizedData = getSelectedData(city);
-      createTable(localizedData);
+      setDataForTable(localizedData);
     }
 
     useEffect(() => {
@@ -50,6 +46,9 @@ const EmployeeList = (listDataJson) => {
         <Item label="All" onSelect={() => setCity('All')} />
       </DropdownButton>
       <p>{city}</p>
+      <div>
+        {dataForTable !== -1 && <ResultsTable results={dataForTable} />}
+      </div>
     </div>
   );
 };
