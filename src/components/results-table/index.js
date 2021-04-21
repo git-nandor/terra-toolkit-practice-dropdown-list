@@ -1,6 +1,6 @@
 import React from 'react';
 import Table from 'terra-table';
-import {v4 as unicId} from 'uuid'; 
+import {v4 as uniqId} from 'uuid'; 
 
 
 const ResultsTable = (data) => {
@@ -14,11 +14,11 @@ const ResultsTable = (data) => {
     for(let personIndex in results) {
         tableData[0].rows.push(
             {
-                key: `row-${unicId()}`,
+                key: `row-${uniqId()}`,
                 cells: [
-                    { key: `cell-${unicId()}`, children: results[personIndex].name },
-                    { key: `cell-${unicId()}`, children: results[personIndex].position },
-                    { key: `cell-${unicId()}`, children: results[personIndex].location },
+                    { key: `cell-${uniqId()}`, children: results[personIndex].name },
+                    { key: `cell-${uniqId()}`, children: results[personIndex].position },
+                    { key: `cell-${uniqId()}`, children: results[personIndex].location },
                 ],
             }
         )
