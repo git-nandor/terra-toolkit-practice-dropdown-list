@@ -1,0 +1,22 @@
+.dropdownContainer {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    padding: 50px 0 50px 0;
+    margin: auto;
+}
+.dropdownInfo {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-left: 1px solid #d2d3d4;
+    border-right: 1px solid #d2d3d4;
+    background-color: var(--terra-table-header-background-color, #f1f1f2);
+    border-bottom: var(--terra-table-header-border-bottom, 1px solid #868a8c);
+    box-shadow: var(--terra-table-header-box-shadow, 0 4px 4px -4px rgba(134, 138, 140, 0.75), inset 0 0 0 1px #fff);
+}
+.tableContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

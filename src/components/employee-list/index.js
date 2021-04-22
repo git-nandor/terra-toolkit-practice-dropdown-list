@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton, { Item, Variants } from 'terra-dropdown-button';
 import ResultsTable from '../results-table';
+import classes from "./employee-list.module.css";
 
 const EmployeeList = (listDataJson) => {
     const defaultCity = 'default';
@@ -35,18 +36,21 @@ const EmployeeList = (listDataJson) => {
     }, [city]);
 
   return (
-    <div>
+    <div className={classes.dropdownContainer}>
       <DropdownButton
         label="Select by city"
         variant={Variants.EMPHASIS}
+        isBlock={true}
       >
         <Item label="Budapest" onSelect={() => setCity('Budapest')} />
         <Item label="Debrecen" onSelect={() => setCity('Debrecen')} />
         <Item label="Szeged" onSelect={() => setCity('Szeged')} />
         <Item label="All" onSelect={() => setCity('All')} />
       </DropdownButton>
-      <p>{city}</p>
-      <div>
+      <div className={classes.dropdownInfo}>
+        { city !== defaultCity ? city : 'Please select region'}
+      </div>
+      <div className={classes.tableContainer}>
         {dataForTable !== -1 && <ResultsTable results={dataForTable} />}
       </div>
     </div>
