@@ -1,39 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import DropdownButton, { Item, Variants } from 'terra-dropdown-button';
+import  listDataJson from '../../data/list-data.json';
 import ResultsTable from '../results-table';
 import classes from "./employee-list.module.css";
 
-const EmployeeList = (listDataJson) => {
-    const defaultCity = 'default';
-    const [city, setCity] = useState(defaultCity);
-    const [dataForTable, setDataForTable] = useState(-1);
-    // const listData = JSON.parse(listDataJson); origin error? invalid json?
-    const listData = listDataJson.listData.data;
-    
-    const getSelectedData = (city) => {
-      switch (city) {
-          case 'All':
-          return listData;
 
-          case defaultCity:  
-          return -1;
+const EmployeeList = () => {
+  const defaultCity = 'default';
+  const [city, setCity] = useState(defaultCity);
+  const listData = listDataJson.data;
+  let dataForTable = -1;
+  let dropdownItems = [];
 
-          default:
-          let dataByLocation = listData.filter( function(person) {
-            return person.location === city;
-          });
-          return dataByLocation;
-        };
+  let createItem = (location) => {
+    return <Item label={location} onSelect={() => setCity(location)} />;
+  }
+  
+  let generateDropdownItems = () => {
+    let collectedLocations = [];
+
+    for (var personIndex in listData) { 
+      let personLocation = listData[personIndex]['location'];
+
+      if (!collectedLocations.includes(personLocation)) {
+        dropdownItems.push(createItem(personLocation));
+        collectedLocations.push(personLocation);
+      } 
     }
 
-    const startGatheringProcess = (city) => {
-      let localizedData = getSelectedData(city);
-      setDataForTable(localizedData);
-    }
+    dropdownItems.push(createItem('All'));
+  }
 
-    useEffect(() => {
-      startGatheringProcess(city);   
-    }, [city]);
+  useEffect(() => {
+    generateDropdownItems();
+  }, []);
+
+  const filteredData = (city) => {
+    return listData.filter( function(person) {
+      return person.location === city;
+    });
+  }
+
+  const getSelectedData = (city) => {
+    if (city === 'All') {
+      return listData;
+    } else {
+      return filteredData(city);
+    }
+  }
+
+  if (city !== defaultCity ) {
+    dataForTable = getSelectedData(city);
+  } 
 
   return (
     <div className={classes.dropdownContainer}>
@@ -42,13 +60,10 @@ const EmployeeList = (listDataJson) => {
         variant={Variants.EMPHASIS}
         isBlock={true}
       >
-        <Item label="Budapest" onSelect={() => setCity('Budapest')} />
-        <Item label="Debrecen" onSelect={() => setCity('Debrecen')} />
-        <Item label="Szeged" onSelect={() => setCity('Szeged')} />
-        <Item label="All" onSelect={() => setCity('All')} />
+        <>{dropdownItems}</>
       </DropdownButton>
       <div className={classes.dropdownInfo}>
-        { city !== defaultCity ? city : 'Please select region'}
+        {dataForTable !== -1 ? city : 'Please select region'}
       </div>
       <div className={classes.tableContainer}>
         {dataForTable !== -1 && <ResultsTable results={dataForTable} />}
