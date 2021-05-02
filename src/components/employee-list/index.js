@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import DropdownButton, { Item, Variants } from 'terra-dropdown-button';
+import React, { useState } from 'react';
+import DropdownButton, { Variants } from 'terra-dropdown-button';
 import  listDataJson from '../../data/list-data.json';
 import ResultsTable from '../results-table';
+import DropdownItems from '../dropdown-items';
 import classes from "./employee-list.module.css";
 
 
@@ -10,30 +11,7 @@ const EmployeeList = () => {
   const [city, setCity] = useState(defaultCity);
   const listData = listDataJson.data;
   let dataForTable = -1;
-  let dropdownItems = [];
 
-  let createItem = (location) => {
-    return <Item label={location} onSelect={() => setCity(location)} />;
-  }
-  
-  let generateDropdownItems = () => {
-    let collectedLocations = [];
-
-    for (var personIndex in listData) { 
-      let personLocation = listData[personIndex]['location'];
-
-      if (!collectedLocations.includes(personLocation)) {
-        dropdownItems.push(createItem(personLocation));
-        collectedLocations.push(personLocation);
-      } 
-    }
-
-    dropdownItems.push(createItem('All'));
-  }
-
-  useEffect(() => {
-    generateDropdownItems();
-  }, []);
 
   const filteredData = (city) => {
     return listData.filter( function(person) {
@@ -60,7 +38,7 @@ const EmployeeList = () => {
         variant={Variants.EMPHASIS}
         isBlock={true}
       >
-        <>{dropdownItems}</>
+        <DropdownItems itemsData={listData} eventCallback={(location)=>setCity(location)}/>
       </DropdownButton>
       <div className={classes.dropdownInfo}>
         {dataForTable !== -1 ? city : 'Please select region'}

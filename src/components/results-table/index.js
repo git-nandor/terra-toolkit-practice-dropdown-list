@@ -10,7 +10,18 @@ const ResultsTable = (data) => {
             rows:[]
         }
     ];
+    // let label = key.charAt(0).toUpperCase() + key.substring(1);
+    /*
+    Object.keys(listDataJson.data[0]).map(key => {
+      let label = key.charAt(0).toUpperCase() + key.substring(1);
+      console.log(label,': ', listDataJson.data[0][key]);
 
+      dropdownItems.push(
+        <Item label={label} onSelect={() => setCity(label)} />
+      );
+    })
+
+    */
     for(let personIndex in results) {
         tableData[0].rows.push(
             {
